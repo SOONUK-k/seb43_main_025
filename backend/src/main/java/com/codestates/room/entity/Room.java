@@ -5,7 +5,6 @@ import com.codestates.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +19,20 @@ public class Room extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
 
-    @Column(nullable = false)
+    @Column(nullable = false) //member 고유식별자랑 달라도 상관없는지. 요청시 그냥 파라미터로 넣을지.
     private Long adminMemberId;
+
+    @Column
+    private String adminNickname;
 
     @Column(nullable = false)
     private String title;
 
     @Column
-    private String imageUrl;
+    private String info;
 
     @Column
-    private String notice;
+    private String imageUrl;
 
     @Column
     private String password;
@@ -50,8 +52,15 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room")
     private List<MemberRoom> memberRoomList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "room")
+
+    @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL) //ALL
     private List<RoomTag> roomTagList = new ArrayList<>();
+
+    public List<RoomTag> setRoomTagList(List<RoomTag> roomTagList) {
+        this.roomTagList = roomTagList;
+        return roomTagList;
+    }
 }
+
 
 

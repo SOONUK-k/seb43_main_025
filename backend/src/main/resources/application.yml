@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: application-dev.yml #설정추가
   h2:
     console:
       enabled: true
@@ -18,9 +20,16 @@ spring:
   sql:
     init:
       data-locations: classpath:data.sql
+  output:
+    ansi:
+      enabled: DETECT
 logging:
   level:
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
+    root: INFO
+    org.apache: WARN
+    org.springframework:
+      orm:
+        jpa: DEBUG
+    org.springframework.boot.devtools: INFO
+    org.kurento: INFO
+    org.kurento.tutorial: INFO
